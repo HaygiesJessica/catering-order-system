@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Saffron &amp; Sage — Catering Order Desk</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🥘</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,900;1,9..144,600;1,9..144,900&family=Karla:wght@400;500;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="booting">
+
+<!-- ============ AUTH SCREEN ============ -->
+<div class="auth-wrap" id="authView">
+
+  <aside class="panel-left">
+    <span class="speck" style="left:8%;top:16%;width:10px;height:10px;animation-delay:-1s"></span>
+    <span class="speck" style="left:82%;top:12%;width:7px;height:7px;animation-delay:-4s"></span>
+    <span class="speck" style="left:64%;top:58%;width:12px;height:12px;animation-delay:-7s"></span>
+    <span class="speck" style="left:24%;top:72%;width:8px;height:8px;animation-delay:-2.5s"></span>
+    <span class="speck" style="left:90%;top:66%;width:6px;height:6px;animation-delay:-5.5s"></span>
+
+    <svg class="watermark" viewBox="0 0 48 48" aria-hidden="true">
+      <path d="M6 32a18 18 0 0 1 36 0" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="3" y1="34.5" x2="45" y2="34.5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+      <circle cx="24" cy="9.5" r="2.6" fill="currentColor"/>
+      <line x1="24" y1="12" x2="24" y2="15" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+    </svg>
+
+    <div class="brand">
+      <svg viewBox="0 0 48 48" aria-hidden="true">
+        <path d="M6 32a18 18 0 0 1 36 0" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+        <line x1="3" y1="34.5" x2="45" y2="34.5" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+        <circle cx="24" cy="9.5" r="2.8" fill="currentColor"/>
+        <line x1="24" y1="12" x2="24" y2="15" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+      </svg>
+      <span>Saffron &amp; Sage<small>Catering Co.</small></span>
+    </div>
+
+    <h1 class="display">Big days deserve <em>brilliant</em> tables.</h1>
+    <p class="lede">Weddings, galas &amp; office lunches — priced per tray, ordered in minutes, cooked with intent.</p>
+
+    <div class="board">
+      <div class="board-head">
+        <span class="pulse-dot"></span>
+        Live from the pass
+        <time class="mono" id="kitchenClock">--:--:--</time>
+      </div>
+      <div class="tickets" id="tickerTrack"></div>
+    </div>
+
+    <ul class="perks">
+      <li>✦ 48-hour notice</li>
+      <li>✦ Staffing on request</li>
+      <li>✦ Dietary menus included</li>
+    </ul>
+
+    <div class="marquee" aria-hidden="true">
+      <div class="marquee-track">
+          <span>Lumpiang Shanghai ◆ Beef Kare-Kare ◆ Crispy Pata ◆ Pork Sisig ◆ Pancit Palabok ◆ Chicken Inasal ◆ Leche Flan ◆ Mango Graham ◆&nbsp;</span>
+          <span>Lumpiang Shanghai ◆ Beef Kare-Kare ◆ Crispy Pata ◆ Pork Sisig ◆ Pancit Palabok ◆ Chicken Inasal ◆ Leche Flan ◆ Mango Graham ◆&nbsp;</span>
+      </div>
+    </div>
+  </aside>
+
+  <main class="panel-right">
+    <div class="auth-card" id="authCard">
+      <p class="eyebrow">Order desk</p>
+
+      <div class="tabs" data-active="login">
+        <button class="tab" type="button" data-tab="login">Sign in</button>
+        <button class="tab" type="button" data-tab="register">Create account</button>
+        <span class="tab-ind"></span>
+      </div>
+
+      <!-- LOGIN -->
+      <form id="loginForm" class="authform" novalidate>
+        <div class="field">
+          <input type="email" id="loginEmail" placeholder=" " autocomplete="email">
+          <label for="loginEmail">Email address</label>
+        </div>
+        <div class="field pw">
+          <input type="password" id="loginPassword" placeholder=" " autocomplete="current-password">
+          <label for="loginPassword">Password</label>
+          <button type="button" class="pw-toggle" data-target="loginPassword">Show</button>
+        </div>
+        <p class="form-msg" id="loginMsg" hidden></p>
+        <button class="btn btn-primary btn-block" id="loginBtn" type="submit">
+          <span class="btn-label">Sign in</span><span class="spinner"></span>
+        </button>
+        <p class="hint">
+          Demo client · <code>chef@saffronsage.test</code> / <code>butter-thyme</code><br>
+          Admin · <code>admin@saffronsage.test</code> / <code>admin1234</code>
+        </p>
+      </form>
+
+      <!-- REGISTER -->
+      <form id="registerForm" class="authform" novalidate hidden>
+        <div class="field">
+          <input type="text" id="registerName" placeholder=" " autocomplete="name">
+          <label for="registerName">Full name</label>
+        </div>
+        <div class="field">
+          <input type="email" id="registerEmail" placeholder=" " autocomplete="email">
+          <label for="registerEmail">Email address</label>
+        </div>
+        <div class="field pw">
+          <input type="password" id="registerPassword" placeholder=" " autocomplete="new-password">
+          <label for="registerPassword">Password</label>
+          <button type="button" class="pw-toggle" data-target="registerPassword">Show</button>
+        </div>
+        <div class="strength" id="strengthBar"><i></i><i></i><i></i><i></i><span id="strengthLabel"></span></div>
+        <div class="field pw">
+          <input type="password" id="registerConfirm" placeholder=" " autocomplete="new-password">
+          <label for="registerConfirm">Confirm password</label>
+        </div>
+        <p class="form-msg" id="registerMsg" hidden></p>
+        <button class="btn btn-primary btn-block" id="registerBtn" type="submit">
+          <span class="btn-label">Create my account</span><span class="spinner"></span>
+        </button>
+        <p class="hint">By creating an account you agree to eat extremely well.</p>
+      </form>
+
+      <p class="no-sql">🫙 Preserved in a JSON pantry — zero SQL involved.</p>
+    </div>
+  </main>
+</div>
+
+<!-- ============ APP (post-login) ============ -->
+<section id="appView" hidden>
+  <header class="topbar">
+    <div class="brand brand-sm">
+      <svg viewBox="0 0 48 48" aria-hidden="true">
+        <path d="M6 32a18 18 0 0 1 36 0" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+        <line x1="3" y1="34.5" x2="45" y2="34.5" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+        <circle cx="24" cy="9.5" r="2.8" fill="currentColor"/>
+        <line x1="24" y1="12" x2="24" y2="15" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+      </svg>
+      <span>Saffron &amp; Sage</span>
+    </div>
+
+    <nav class="mainnav">
+      <button class="navbtn client-only active" data-view="menu">Menu</button>
+      <button class="navbtn client-only" data-view="orders">My orders <span class="chip-count" id="orderCountBadge" hidden>0</span></button>
+      <button class="navbtn admin-only" id="adminNavBtn" data-view="admin" hidden>Order board</button>
+    </nav>
+
+    <div class="topbar-right">
+      <button id="cartBtn" class="cartbtn">🧺 Basket <span class="badge" id="cartCount" hidden>0</span></button>
+      <div class="userchip"><span class="initials" id="userInitials">·</span><span id="userName"></span></div>
+      <button id="logoutBtn" class="logoutbtn">Log out</button>
+    </div>
+  </header>
+
+  <main class="shell">
+    <section id="menuView" class="view">
+      <div class="hello">
+        <h2 id="greeting">Hello, Chef</h2>
+        <p class="mono" id="todayLine"></p>
+      </div>
+      <div class="filters" id="categoryFilters"></div>
+      <div class="menu-grid" id="menuGrid"></div>
+    </section>
+
+    <section id="ordersView" class="view" hidden>
+      <div class="hello">
+        <h2>Your orders</h2>
+        <p>Track your order from confirmation to delivery, then confirm when you receive it.</p>
+      </div>
+      <div class="orders-list" id="ordersList"></div>
+    </section>
+
+    <section id="adminView" class="view" hidden>
+      <div class="hello">
+        <h2>Order board</h2>
+        <p>Manage client orders from confirmation through delivery.</p>
+      </div>
+      <div class="stats" id="adminStats"></div>
+      <div class="admin-section-head">
+        <h3>Menu availability</h3>
+        <span class="admin-role-note">Reflects on client side</span>
+      </div>
+      <div class="menu-avail" id="adminMenu"></div>
+      <div class="admin-section-head">
+        <h3>Client orders</h3>
+        <span class="admin-role-note">Admin only</span>
+      </div>
+      <div class="orders-list" id="adminOrders"></div>
+      <h3 class="admin-sub">Registered accounts</h3>
+      <div class="orders-list" id="adminUsers"></div>
+    </section>
+  </main>
+
+  <!-- Basket drawer -->
+  <div class="scrim" id="cartScrim" hidden></div>
+  <aside class="drawer" id="cartDrawer" aria-hidden="true">
+    <header class="drawer-head">
+      <h3>Your spread</h3>
+      <button class="iconbtn" id="closeCartBtn" aria-label="Close basket">✕</button>
+    </header>
+    <div class="drawer-lines" id="cartLines"></div>
+    <div class="drawer-event">
+      <h4>Event details</h4>
+      <div class="ev-grid">
+        <div><label for="evType">Event type</label><select id="evType"></select></div>
+        <div><label for="evGuests">Guests</label><input type="number" id="evGuests" value="25" min="10" max="2000"></div>
+        <div><label for="evDate">Date</label><input type="date" id="evDate"></div>
+        <div><label for="evTime">Time</label><input type="time" id="evTime" value="17:00"></div>
+      </div>
+      <div class="ev-notes">
+        <label>Delivery location * <span style="text-transform:none;letter-spacing:0">(click the map to pin)</span></label>
+        <div id="mapPicker" class="map-picker"></div>
+        <p class="map-hint" id="mapHint">Click the map to drop your delivery pin 📍</p>
+        <input type="text" id="evAddress" maxlength="300" placeholder="Address auto-filled from pin (editable)">
+      </div>
+      <div class="ev-notes"><label for="evNotes">Notes for the kitchen</label>
+        <textarea id="evNotes" rows="2" maxlength="300" placeholder="Allergies, deliveries, gate codes…"></textarea>
+      </div>
+    </div>
+    <footer class="drawer-foot">
+      <div class="row"><span>Subtotal</span><span class="mono" id="sumSubtotal">$0.00</span></div>
+      <div class="row"><span>Service (12%)</span><span class="mono" id="sumService">$0.00</span></div>
+      <div class="row"><span>Delivery</span><span class="mono" id="sumDelivery">$0.00</span></div>
+      <div class="row total"><span>Total</span><span class="mono" id="sumTotal">$0.00</span></div>
+      <button class="btn btn-primary btn-block" id="placeOrderBtn">
+        <span class="btn-label">Place order</span><span class="spinner"></span>
+      </button>
+        <p class="fineprint">Free delivery on orders over ₱5,000 · 48-hour notice</p>
+  </aside>
+</section>
+
+<div class="toasts" id="toasts"></div>
+<script src="js/app.js"></script>
+</body>
+</html>
