@@ -77,37 +77,6 @@ class ToastManager {
   }
 }
 
-/* ================= KitchenTicker ================= */
-class KitchenTicker {
-  constructor(api, track) { this.api = api; this.track = track; this.orders = []; this.timer = null; }
-  async start() {
-    try { this.orders = (await this.api.get('/ticker')).orders; } catch { this.orders = []; }
-    this.render();
-    this.timer = setInterval(() => this.tick(), 3800);
-  }
-  stop() { clearInterval(this.timer); }
-  tick() {
-    if (this.orders.length > 1) { this.orders.push(this.orders.shift()); this.render(true); }
-  }
-  render(animate = false) {
-    if (!this.orders.length) {
-      this.track.innerHTML = `<div class="ticket empty">No tickets yet — be the first order of the day ✦</div>`;
-      return;
-    }
-    this.track.innerHTML = this.orders.slice(0, 3).map((o, i) => {
-      const c = STATUS_COLORS[o.status] || '#e9a13b';
-      return `
-        <div class="ticket ${animate && i === 0 ? 'enter' : ''}" style="--edge:${c}">
-          <div class="t-top">
-            <span class="mono t-id">#${esc(o.id)}</span>
-            <span class="t-status" style="--c:${c}">${esc(statusLabel(o.status))}</span>
-          </div>
-          <div class="t-sub">${esc(o.eventType)} · ${o.guests} guests · ${esc(o.ago)}</div>
-        </div>`;
-    }).join('');
-  }
-}
-
 /* ================= Cart ================= */
 class Cart {
   constructor() {
@@ -152,7 +121,6 @@ class App {
     this.api = new ApiClient();
     this.toast = new ToastManager($('#toasts'));
     this.cart = new Cart();
-    this.ticker = new KitchenTicker(this.api, $('#tickerTrack'));
     this.user = null;
     this.menu = [];
     this.fees = { serviceRate: 0.12, deliveryFee: 250, freeDeliveryOver: 5000 };
@@ -166,7 +134,7 @@ class App {
   async init() {
     this.bindTabs(); this.bindAuthForms(); this.bindNav();
     this.bindMenuGrid(); this.bindCartDrawer(); this.bindAdminMenu();
-    this.startClock(); this.setDateMin();
+    this.setDateMin();
     try {
       const { user } = await this.api.get('/auth/me');
       await this.enterApp(user, { silent: true });
@@ -179,12 +147,10 @@ class App {
     $('#appView').hidden = true;
     $('#authView').hidden = false;
     document.body.classList.remove('booting');
-    this.ticker.start();
   }
 
   async enterApp(user, { silent = false } = {}) {
     this.user = user;
-    this.ticker.stop();
     $('#authView').hidden = true;
     $('#appView').hidden = false;
     document.body.classList.remove('booting');
@@ -208,7 +174,7 @@ class App {
     this.renderFilters(); this.renderMenu();
     this.updateCartBadge(false); this.renderCart();
     this.switchView('menu');
-    if (!silent) this.toast.show(`Welcome, ${user.name.split(' ')[0]} — the pass is yours.`, 'success');
+    if (!silent) this.toast.show(`Welcome, ${user.name.split(' ')[0]} — handaan na!`, 'success');
   }
 
   switchView(name) {
@@ -225,12 +191,6 @@ class App {
     const part = h < 12 ? 'Good morning' : h < 17 ? 'Good afternoon' : 'Good evening';
     $('#greeting').textContent = `${part}, ${this.user.name.split(' ')[0]}`;
     $('#todayLine').textContent = new Date().toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' }) + ' · Kitchen open until 22:00';
-  }
-
-  startClock() {
-    const el = $('#kitchenClock');
-    const tick = () => { el.textContent = new Date().toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit', second: '2-digit' }); };
-    tick(); setInterval(tick, 1000);
   }
 
   setDateMin() { $('#evDate').min = new Date().toISOString().slice(0, 10); }
@@ -668,7 +628,7 @@ class App {
   renderAdminOrders(orders) {
     const wrap = $('#adminOrders');
     if (!orders.length) {
-      wrap.innerHTML = `<div class="empty-state"><span class="big">🧑‍</span>No tickets on the board yet.</div>`;
+      wrap.innerHTML = `<div class="empty-state"><span class="big">🧑‍🍳</span>No tickets on the board yet.</div>`;
       return;
     }
     const ALL = ['pending', 'confirmed', 'preparing', 'ready', 'delivered', 'cancelled', 'cannot_accommodate'];
@@ -740,4 +700,5 @@ function setLoading(btn, on) { btn.classList.toggle('loading', on); btn.disabled
 function showMsg(which, text) { const el = $(`#${which}Msg`); el.textContent = text; el.hidden = false; }
 function hideMsg(which) { $(`#${which}Msg`).hidden = true; }
 
-new App().init();
+window.app = new App();
+window.app.init();

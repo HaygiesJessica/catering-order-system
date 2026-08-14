@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Saffron &amp; Sage — Catering Order Desk</title>
+<title>Cai-nan Feast — Catering Order Desk</title>
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🥘</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -11,6 +11,7 @@
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <link rel="stylesheet" href="css/styles.css">
+<link rel="stylesheet" href="css/chat.css">
 </head>
 <body class="booting">
 
@@ -24,11 +25,18 @@
     <span class="speck" style="left:24%;top:72%;width:8px;height:8px;animation-delay:-2.5s"></span>
     <span class="speck" style="left:90%;top:66%;width:6px;height:6px;animation-delay:-5.5s"></span>
 
-    <svg class="watermark" viewBox="0 0 48 48" aria-hidden="true">
-      <path d="M6 32a18 18 0 0 1 36 0" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
-      <line x1="3" y1="34.5" x2="45" y2="34.5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
-      <circle cx="24" cy="9.5" r="2.6" fill="currentColor"/>
-      <line x1="24" y1="12" x2="24" y2="15" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+    <svg class="watermark" viewBox="0 0 100 100" aria-hidden="true">
+      <circle cx="50" cy="50" r="16" fill="currentColor"/>
+      <g stroke="currentColor" stroke-width="6" stroke-linecap="round">
+        <line x1="50" y1="8" x2="50" y2="24"/>
+        <line x1="50" y1="76" x2="50" y2="92"/>
+        <line x1="8" y1="50" x2="24" y2="50"/>
+        <line x1="76" y1="50" x2="92" y2="50"/>
+        <line x1="20" y1="20" x2="31" y2="31"/>
+        <line x1="69" y1="69" x2="80" y2="80"/>
+        <line x1="20" y1="80" x2="31" y2="69"/>
+        <line x1="69" y1="31" x2="80" y2="20"/>
+      </g>
     </svg>
 
     <div class="brand">
@@ -38,31 +46,21 @@
         <circle cx="24" cy="9.5" r="2.8" fill="currentColor"/>
         <line x1="24" y1="12" x2="24" y2="15" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
       </svg>
-      <span>Saffron &amp; Sage<small>Catering Co.</small></span>
+      <span>Cai-nan Feast<small>Catering Co.</small></span>
     </div>
 
-    <h1 class="display">Big days deserve <em>brilliant</em> tables.</h1>
-    <p class="lede">Weddings, galas &amp; office lunches — priced per tray, ordered in minutes, cooked with intent.</p>
-
-    <div class="board">
-      <div class="board-head">
-        <span class="pulse-dot"></span>
-        Live from the pass
-        <time class="mono" id="kitchenClock">--:--:--</time>
-      </div>
-      <div class="tickets" id="tickerTrack"></div>
-    </div>
+    <h1 class="display">Where Every Order Becomes a <em>Feast</em>.</h1>
+    <p class="lede">Filipino handaan catering — lumpia, kare-kare, at leche flan. Ordered in minutes, cooked with intent.</p>
 
     <ul class="perks">
       <li>✦ 48-hour notice</li>
       <li>✦ Staffing on request</li>
-      <li>✦ Dietary menus included</li>
     </ul>
 
     <div class="marquee" aria-hidden="true">
       <div class="marquee-track">
-          <span>Lumpiang Shanghai ◆ Beef Kare-Kare ◆ Crispy Pata ◆ Pork Sisig ◆ Pancit Palabok ◆ Chicken Inasal ◆ Leche Flan ◆ Mango Graham ◆&nbsp;</span>
-          <span>Lumpiang Shanghai ◆ Beef Kare-Kare ◆ Crispy Pata ◆ Pork Sisig ◆ Pancit Palabok ◆ Chicken Inasal ◆ Leche Flan ◆ Mango Graham ◆&nbsp;</span>
+        <span>Lumpiang Shanghai ◆ Beef Kare-Kare ◆ Crispy Pata ◆ Pork Sisig ◆ Pancit Palabok ◆ Chicken Inasal ◆ Leche Flan ◆ Mango Graham ◆&nbsp;</span>
+        <span>Lumpiang Shanghai ◆ Beef Kare-Kare ◆ Crispy Pata ◆ Pork Sisig ◆ Pancit Palabok ◆ Chicken Inasal ◆ Leche Flan ◆ Mango Graham ◆&nbsp;</span>
       </div>
     </div>
   </aside>
@@ -140,7 +138,7 @@
         <circle cx="24" cy="9.5" r="2.8" fill="currentColor"/>
         <line x1="24" y1="12" x2="24" y2="15" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
       </svg>
-      <span>Saffron &amp; Sage</span>
+      <span>Cai-nan Feast</span>
     </div>
 
     <nav class="mainnav">
@@ -222,18 +220,35 @@
       </div>
     </div>
     <footer class="drawer-foot">
-      <div class="row"><span>Subtotal</span><span class="mono" id="sumSubtotal">$0.00</span></div>
-      <div class="row"><span>Service (12%)</span><span class="mono" id="sumService">$0.00</span></div>
-      <div class="row"><span>Delivery</span><span class="mono" id="sumDelivery">$0.00</span></div>
-      <div class="row total"><span>Total</span><span class="mono" id="sumTotal">$0.00</span></div>
+      <div class="row"><span>Subtotal</span><span class="mono" id="sumSubtotal">₱0.00</span></div>
+      <div class="row"><span>Service (12%)</span><span class="mono" id="sumService">₱0.00</span></div>
+      <div class="row"><span>Delivery</span><span class="mono" id="sumDelivery">₱0.00</span></div>
+      <div class="row total"><span>Total</span><span class="mono" id="sumTotal">₱0.00</span></div>
       <button class="btn btn-primary btn-block" id="placeOrderBtn">
         <span class="btn-label">Place order</span><span class="spinner"></span>
       </button>
-        <p class="fineprint">Free delivery on orders over ₱5,000 · 48-hour notice</p>
+      <p class="fineprint">Free delivery on orders over ₱5,000 · 48-hour notice</p>
+    </footer>
+  </aside>
+
+  <!-- Chat -->
+  <button id="chatFab" class="chat-fab" type="button" title="Messages">💬</button>
+  <aside id="chatPanel" class="chat-panel">
+    <header class="chat-head">
+      <span>💬</span>
+      <select id="chatClientSelect" hidden></select>
+      <button id="chatClose" class="iconbtn" type="button">✕</button>
+    </header>
+    <div id="chatMessages" class="chat-messages"></div>
+    <footer class="chat-foot">
+      <input id="chatInput" type="text" maxlength="500" placeholder="Type a message…">
+      <button id="chatSend" class="btn btn-primary" type="button">Send</button>
+    </footer>
   </aside>
 </section>
 
 <div class="toasts" id="toasts"></div>
 <script src="js/app.js"></script>
+<script src="js/chat.js"></script>
 </body>
 </html>

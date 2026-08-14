@@ -8,6 +8,8 @@ const { JsonDatabase } = require('./src/JsonDatabase');
 const { AuthService } = require('./src/services/AuthService');
 const { OrderService } = require('./src/services/OrderService');
 const { seedDatabase } = require('./src/seed');
+const { ChatService } = require('./src/services/ChatService');
+const { chatRoutes } = require('./src/routes/chat.routes');
 
 const PORT = process.env.PORT || 3000;
 
@@ -17,6 +19,7 @@ seedDatabase(db);
 
 const authService = new AuthService(db);
 const orderService = new OrderService(db);
+const chatService = new ChatService(db);
 
 const app = express();
 
@@ -116,6 +119,9 @@ app.get('/api/admin/users', requireAuth, requireAdmin, (req, res) => {
 app.patch('/api/admin/menu/:id/availability', requireAuth, requireAdmin, (req, res) => {
   res.json(orderService.setMenuAvailability(req.params.id, (req.body || {}).available));
 });
+
+/* ================= CHAT ================= */
+app.use('/api/chat', chatRoutes({ requireAuth, requireAdmin, chatService }));
 
 /* ---- fallback for "/" with a friendly message ---- */
 app.get('/', (req, res) => {

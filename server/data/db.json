@@ -26,6 +26,11 @@
       "token": "25e39f89d0bad4b4188b2131d6fc63f4a7e202a3c4660cbb",
       "userId": 1,
       "expiresAt": 1787064818944
+    },
+    {
+      "token": "fc3f730d32de9e8a6d1c485032069237a185e81f3d2c952a",
+      "userId": 2,
+      "expiresAt": 1787329779396
     }
   ],
   "orders": [
@@ -69,7 +74,7 @@
       "serviceFee": 460.8,
       "deliveryFee": 250,
       "total": 4550.8,
-      "status": "pending",
+      "status": "cannot_accommodate",
       "createdAt": "2026-08-11T13:40:19.829Z"
     },
     {
@@ -286,16 +291,90 @@
       "total": 4539.6,
       "status": "delivered",
       "createdAt": "2026-08-06T14:52:19.829Z"
+    },
+    {
+      "id": "SS-1043",
+      "userId": 2,
+      "items": [
+        {
+          "menuId": "m12",
+          "name": "Filipino Sweet Spaghetti",
+          "unit": "bilao · ~10 guests",
+          "price": 550,
+          "qty": 1,
+          "lineTotal": 550
+        },
+        {
+          "menuId": "m13",
+          "name": "Pancit Bihon Guisado",
+          "unit": "bilao · ~10 guests",
+          "price": 680,
+          "qty": 1,
+          "lineTotal": 680
+        },
+        {
+          "menuId": "m02",
+          "name": "Filipino BBQ Skewers",
+          "unit": "tray · 10 sticks",
+          "price": 380,
+          "qty": 1,
+          "lineTotal": 380
+        }
+      ],
+      "guests": 25,
+      "address": "R. Papa Street, Barangay 462, Sampaloc, Fourth District, Manila, Capital District, Metro Manila, 1015, Philippines",
+      "location": {
+        "lat": 14.605512,
+        "lng": 120.986595
+      },
+      "eventType": "Garden party",
+      "eventDate": "2026-08-25",
+      "eventTime": "17:00",
+      "notes": "",
+      "subtotal": 1610,
+      "serviceFee": 193.2,
+      "deliveryFee": 250,
+      "total": 2053.2,
+      "status": "delivered",
+      "createdAt": "2026-08-11T15:33:36.847Z"
     }
   ],
   "meta": {
     "counters": {
       "users": 2,
-      "orders": 6
+      "orders": 7,
+      "messages": 3
     },
     "seeded": true
   },
   "menuFlags": {
-    "m24": false
-  }
+    "m24": true,
+    "m16": false
+  },
+  "messages": [
+    {
+      "id": 1,
+      "clientId": 2,
+      "userId": 2,
+      "senderRole": "client",
+      "text": "hello",
+      "createdAt": "2026-08-14T16:28:56.134Z"
+    },
+    {
+      "id": 2,
+      "clientId": 2,
+      "userId": 1,
+      "senderRole": "admin",
+      "text": "hi",
+      "createdAt": "2026-08-14T16:29:25.559Z"
+    },
+    {
+      "id": 3,
+      "clientId": 2,
+      "userId": 1,
+      "senderRole": "admin",
+      "text": "what can i do for u?",
+      "createdAt": "2026-08-14T16:29:32.745Z"
+    }
+  ]
 }

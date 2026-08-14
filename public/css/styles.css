@@ -3,22 +3,22 @@
    Fraunces (display) / Karla (body) / Space Mono (tickets)
    ============================================================ */
 :root {
-  --forest: #0d231a;
-  --forest-2: #123528;
-  --moss: #1d5c41;
-  --paper: #f6f1e4;
-  --paper-2: #eee6d2;
+  --forest: #0e2a4f;
+  --forest-2: #16407c;
+  --moss: #1f5fa8;
+  --paper: #f8f4ea;
+  --paper-2: #efe7d4;
   --card: #fffdf6;
-  --ink: #152820;
-  --ink-soft: #5b6b62;
-  --line: #ded4bd;
-  --saffron: #e9a13b;
-  --saffron-deep: #c77f1d;
-  --coral: #c95f3c;
-  --ok: #2f7d5c;
+  --ink: #1a2b45;
+  --ink-soft: #5c6b80;
+  --line: #ded7c4;
+  --saffron: #f6b51e;
+  --saffron-deep: #b97e0a;
+  --coral: #ce1126;
+  --ok: #1f7a4d;
   --warn: #b9822e;
-  --bad: #b4462f;
-  --shadow: 0 14px 34px rgba(13, 35, 26, .16);
+  --bad: #ce1126;
+  --shadow: 0 14px 34px rgba(14, 42, 79, .16);
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -49,8 +49,8 @@ h1, h2, h3, .display { font-family: 'Fraunces', serif; }
   color: var(--paper);
   overflow: hidden;
   background:
-    radial-gradient(1100px 560px at 88% -12%, rgba(233, 161, 59, .16), transparent 60%),
-    radial-gradient(900px 520px at -12% 112%, rgba(29, 92, 65, .55), transparent 62%),
+    radial-gradient(1100px 560px at 88% -12%, rgba(246, 181, 30, .18), transparent 60%),
+    radial-gradient(900px 520px at -12% 112%, rgba(22, 64, 124, .65), transparent 62%),
     var(--forest);
 }
 .panel-left::before {
@@ -127,8 +127,8 @@ h1, h2, h3, .display { font-family: 'Fraunces', serif; }
 
 .marquee {
   position: absolute; left: 0; right: 0; bottom: 0; z-index: 2;
-  background: var(--saffron); color: #1c2a17; overflow: hidden;
-  border-top: 3px solid rgba(13, 35, 26, .9);
+  background: var(--saffron); color: #14264a; overflow: hidden;
+  border-top: 3px solid rgba(14, 38, 74, .9);
 }
 .marquee-track {
   display: flex; width: max-content; padding: 9px 0;
@@ -218,15 +218,15 @@ h1, h2, h3, .display { font-family: 'Fraunces', serif; }
   font: 800 .95rem 'Karla', sans-serif; padding: 13px 20px;
   transition: transform .15s, box-shadow .15s, filter .15s;
 }
-.btn-primary { background: var(--saffron); color: #17291f; box-shadow: 0 6px 16px rgba(233, 161, 59, .35); }
-.btn-primary:hover { transform: translateY(-1px); filter: brightness(1.05); box-shadow: 0 10px 22px rgba(233, 161, 59, .4); }
+.btn-primary { background: var(--saffron); color: #14264a; box-shadow: 0 6px 16px rgba(246, 181, 30, .35); }
+.btn-primary:hover { transform: translateY(-1px); filter: brightness(1.05); box-shadow: 0 10px 22px rgba(246, 181, 30, .4); }
 .btn-primary:active { transform: translateY(1px); }
 .btn-block { width: 100%; }
 .btn.ghost { background: none; border: 1.5px solid var(--line); color: var(--ink-soft); padding: 8px 14px; font-size: .8rem; }
 .btn.ghost.danger:hover { border-color: var(--bad); color: var(--bad); }
 .btn .spinner {
   display: none; width: 16px; height: 16px; margin-left: 9px; vertical-align: -3px;
-  border: 2.5px solid rgba(23, 41, 31, .25); border-top-color: #17291f; border-radius: 50%;
+  border: 2.5px solid rgba(20, 38, 74, .25); border-top-color: #14264a; border-radius: 50%;
   animation: spin .7s linear infinite;
 }
 .btn.loading .spinner { display: inline-block; }

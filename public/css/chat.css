@@ -1,0 +1,54 @@
+/* ================= CHAT ================= */
+.chat-fab {
+  position: fixed; right: 22px; bottom: 22px; z-index: 70;
+  width: 56px; height: 56px; border-radius: 50%;
+  border: 0; cursor: pointer; font-size: 24px;
+  background: var(--forest); color: var(--saffron);
+  box-shadow: var(--shadow); transition: transform .15s;
+}
+.chat-fab:hover { transform: translateY(-2px) scale(1.05); }
+
+.chat-panel {
+  position: fixed; right: 22px; bottom: 22px; z-index: 71;
+  width: min(380px, calc(100vw - 32px)); height: min(520px, 70vh);
+  background: var(--card); border: 1px solid var(--line); border-radius: 14px;
+  box-shadow: var(--shadow); display: flex; flex-direction: column;
+  opacity: 0; transform: translateY(14px); pointer-events: none;
+  transition: opacity .25s, transform .25s;
+}
+.chat-panel.open { opacity: 1; transform: none; pointer-events: auto; }
+
+.chat-head {
+  display: flex; align-items: center; gap: 10px; padding: 12px 14px;
+  border-bottom: 1px solid var(--line); font-weight: 800;
+}
+.chat-head select {
+  flex: 1; font: 700 .8rem 'Karla', sans-serif; color: var(--ink);
+  border: 1.5px solid var(--line); border-radius: 8px; padding: 6px 8px; background: #fff;
+}
+
+.chat-messages {
+  flex: 1; overflow-y: auto; padding: 14px;
+  display: flex; flex-direction: column; gap: 10px; background: var(--paper);
+}
+.chat-empty { text-align: center; color: var(--ink-soft); font-size: .82rem; margin: auto; }
+
+.chat-msg { max-width: 82%; }
+.chat-msg .chat-meta { font-size: .62rem; color: var(--ink-soft); margin-bottom: 3px; letter-spacing: .04em; }
+.chat-msg .chat-bubble { padding: 9px 12px; border-radius: 12px; font-size: .85rem; line-height: 1.4; }
+.chat-msg.theirs { align-self: flex-start; }
+.chat-msg.theirs .chat-bubble { background: #fff; border: 1px solid var(--line); border-top-left-radius: 4px; }
+.chat-msg.mine { align-self: flex-end; }
+.chat-msg.mine .chat-meta { text-align: right; }
+.chat-msg.mine .chat-bubble { background: var(--forest); color: var(--paper); border-top-right-radius: 4px; }
+
+.chat-foot { display: flex; gap: 8px; padding: 10px; border-top: 1px solid var(--line); }
+.chat-foot input {
+  flex: 1; border: 1.5px solid var(--line); border-radius: 10px; padding: 10px 12px;
+  font: 500 .88rem 'Karla', sans-serif; color: var(--ink);
+}
+.chat-foot input:focus { outline: none; border-color: var(--saffron-deep); }
+.chat-foot .btn { padding: 10px 16px; }
+
+/* ilipat ang toasts sa kaliwa para hindi sumabak sa chat button */
+.toasts { right: auto; left: 22px; }
