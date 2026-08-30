@@ -11,11 +11,12 @@ const fmtDay = iso => new Date(`${iso}T00:00:00`).toLocaleDateString('en-US', { 
 const STATUS_COLORS = {
   pending: '#e9b64a', confirmed: '#74c69d', preparing: '#f4845f',
   ready: '#ffd166', delivered: '#9db8a9', cancelled: '#e07a69',
-  cannot_accommodate: '#b87fa8'
+  cannot_accommodate: '#b87fa8', completed: '#7d8ca3'
 };
 const STATUS_LABELS = {
   pending: 'pending', confirmed: 'confirmed', preparing: 'preparing', ready: 'ready',
-  delivered: 'delivered', cancelled: 'cancelled', cannot_accommodate: 'Cannot accommodate'
+  delivered: 'delivered', cancelled: 'cancelled', cannot_accommodate: 'Cannot accommodate',
+  completed: 'Completed'
 };
 const statusLabel = s => STATUS_LABELS[s] || s;
 const CATEGORY_HUES = {
@@ -125,6 +126,8 @@ class App {
     this.menu = [];
     this.fees = { serviceRate: 0.12, deliveryFee: 250, freeDeliveryOver: 5000 };
     this.activeCategory = 'All';
+    this.adminOrders = [];
+    this.adminFilter = { groupBy: 'eventDate', status: 'all' };
     this.mapPicker = new MapPicker(pin => this.onPin(pin));
     this.reveal = new IntersectionObserver(entries => {
       entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); this.reveal.unobserve(e.target); } });
@@ -134,6 +137,7 @@ class App {
   async init() {
     this.bindTabs(); this.bindAuthForms(); this.bindNav();
     this.bindMenuGrid(); this.bindCartDrawer(); this.bindAdminMenu();
+    this.bindAdminTabs(); this.bindAdminOrderFilters();
     this.setDateMin();
     try {
       const { user } = await this.api.get('/auth/me');
@@ -193,8 +197,23 @@ class App {
     $('#todayLine').textContent = new Date().toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' }) + ' · Kitchen open until 22:00';
   }
 
-  setDateMin() { $('#evDate').min = new Date().toISOString().slice(0, 10); }
-
+    setDateMin() {
+    const dateEl = $('#evDate');
+    const timeEl = $('#evTime');
+    const todayStr = () => new Date().toISOString().slice(0, 10);
+    dateEl.min = todayStr();
+    const syncTimeMin = () => {
+      if (dateEl.value === todayStr()) {
+        const n = new Date();
+        timeEl.min = `${String(n.getHours()).padStart(2, '0')}:${String(n.getMinutes()).padStart(2, '0')}`;
+      } else {
+        timeEl.removeAttribute('min');
+      }
+    };
+    dateEl.addEventListener('change', syncTimeMin);
+    syncTimeMin();
+  }
+  
   /* ---------- AUTH ---------- */
   bindTabs() {
     $$('.tab').forEach(tab => tab.addEventListener('click', () => {
@@ -466,15 +485,18 @@ class App {
     let address = $('#evAddress').value.trim();
     const pin = this.mapPicker.pin;
     if (!address && pin) address = `${pin.lat}, ${pin.lng}`;
-    if (!eventDate) return this.toast.show('Pick a date for your event.', 'error');
-    if (!Number.isFinite(guests) || guests < 10) return this.toast.show('We cater for 10 guests and up.', 'error');
+    const eventTime = $('#evTime').value;
+    const eventWhen = new Date(`${eventDate}T${eventTime || '00:00'}:00`);
+    if (!eventDate || !eventTime) return this.toast.show('Pick a date and time for your event.', 'error');
+    if (Number.isNaN(eventWhen.getTime())) return this.toast.show('Please set a valid event date and time.', 'error');
+    if (eventWhen <= new Date()) return this.toast.show('The event date and time cannot be in the past — same-day orders must be for a later time.', 'error');
     if (!pin && address.length < 10) return this.toast.show('Drop a pin on the map (or write the complete address).', 'error');
 
     const payload = {
       items: [...this.cart.lines].map(([menuId, qty]) => ({ menuId, qty })),
       guests, address, location: pin || undefined,
       eventDate,
-      eventTime: $('#evTime').value,
+      eventTime,
       eventType: $('#evType').value,
       notes: $('#evNotes').value.trim()
     };
@@ -523,7 +545,7 @@ class App {
     }
   }
 
-  renderOrders(orders) {
+    renderOrders(orders) {
     const wrap = $('#ordersList');
     if (!orders.length) {
       wrap.innerHTML = `<div class="empty-state"><span class="big">🎪</span>No orders yet — your first feast awaits.</div>`;
@@ -533,14 +555,16 @@ class App {
     wrap.innerHTML = orders.map(o => {
       const idx = STEPS.indexOf(o.status);
       const dead = o.status === 'cancelled' || o.status === 'cannot_accommodate';
+      const doneAll = o.status === 'completed';
+      const closed = dead || doneAll;
       const timeline = `
-        <div class="timeline ${dead ? 'cancelled' : ''}">
-          ${STEPS.map((s, i) => `<span class="step ${!dead && i <= idx ? 'done' : ''} ${i === idx ? 'now' : ''}"><i></i>${s}</span>`).join('')}
+        <div class="timeline ${dead ? 'cancelled' : ''} ${doneAll ? 'completed' : ''}">
+          ${STEPS.map((s, i) => `<span class="step ${!dead && (doneAll || i <= idx) ? 'done' : ''} ${i === idx ? 'now' : ''}"><i></i>${s}</span>`).join('')}
         </div>`;
       const summary = o.items.slice(0, 3).map(i => `${i.qty}× ${esc(i.name)}`).join(' · ') +
         (o.items.length > 3 ? ` <em>+${o.items.length - 3} more</em>` : '');
       return `
-        <article class="order-card">
+        <article class="order-card ${closed ? 'done' : ''}">
           <header>
             <div>
               <span class="mono oid">#${esc(o.id)}</span>
@@ -554,7 +578,8 @@ class App {
           ${timeline}
           <footer>
             <span class="ototal mono">${money2(o.total)}</span>
-            ${o.status === 'pending' ? `<button class="btn ghost danger" data-cancel="${esc(o.id)}">Cancel order</button>` : ''}
+            ${o.status === 'pending' || o.status === 'confirmed' ? `<button class="btn ghost danger" data-cancel="${esc(o.id)}">Cancel order</button>` : ''}
+            ${o.status === 'delivered' ? `<button class="btn ghost ok" data-complete="${esc(o.id)}">Confirm pickup ✓</button>` : ''}
           </footer>
         </article>`;
     }).join('');
@@ -564,6 +589,15 @@ class App {
       try {
         await this.api.patch(`/orders/${btn.dataset.cancel}/cancel`);
         this.toast.show('Order cancelled.', 'info');
+        this.loadOrders();
+      } catch (err) { this.toast.show(err.message, 'error'); }
+    }));
+
+    $$('[data-complete]', wrap).forEach(btn => btn.addEventListener('click', async () => {
+      if (!confirm('Confirm that you picked up / received this order?')) return;
+      try {
+        await this.api.patch(`/orders/${btn.dataset.complete}/complete`);
+        this.toast.show('Order completed — salamat! 🎉', 'success');
         this.loadOrders();
       } catch (err) { this.toast.show(err.message, 'error'); }
     }));
@@ -592,6 +626,29 @@ class App {
       <div class="stat"><div class="num">${s.delivered}</div><div class="lbl">Delivered</div></div>
       <div class="stat"><div class="num">${money2(s.revenue)}</div><div class="lbl">Revenue</div></div>
       <div class="stat"><div class="num">${s.guests.toLocaleString()}</div><div class="lbl">Guests fed</div></div>`;
+  }
+
+  /* Tabs: iisa lang ang nakikitang section */
+  bindAdminTabs() {
+    $$('.admin-tab').forEach(btn => btn.addEventListener('click', () => {
+      $$('.admin-tab').forEach(b => b.classList.toggle('active', b === btn));
+      const t = btn.dataset.atab;
+      $('#adminSecOrders').hidden = t !== 'orders';
+      $('#adminSecMenu').hidden = t !== 'menu';
+      $('#adminSecAccounts').hidden = t !== 'accounts';
+    }));
+  }
+
+  /* Filters ng Client orders */
+  bindAdminOrderFilters() {
+    $('#adminGroupBy').addEventListener('change', e => {
+      this.adminFilter.groupBy = e.target.value;
+      this.renderAdminOrders(this.adminOrders);
+    });
+    $('#adminStatusFilter').addEventListener('change', e => {
+      this.adminFilter.status = e.target.value;
+      this.renderAdminOrders(this.adminOrders);
+    });
   }
 
   renderAdminMenu(menu) {
@@ -625,15 +682,63 @@ class App {
     });
   }
 
+  /* Grouped + first-order-first-serve na listahan ng orders */
   renderAdminOrders(orders) {
+    this.adminOrders = orders;
     const wrap = $('#adminOrders');
-    if (!orders.length) {
-      wrap.innerHTML = `<div class="empty-state"><span class="big">🧑‍🍳</span>No tickets on the board yet.</div>`;
+    const { groupBy, status } = this.adminFilter;
+
+    let list = orders.slice();
+    if (status !== 'all') list = list.filter(o => o.status === status);
+
+    if (!list.length) {
+      wrap.innerHTML = `<div class="empty-state"><span class="big">🧑🍳</span>No tickets match this filter.</div>`;
       return;
     }
-    const ALL = ['pending', 'confirmed', 'preparing', 'ready', 'delivered', 'cancelled', 'cannot_accommodate'];
-    wrap.innerHTML = orders.map(o => `
-      <article class="order-card">
+
+    const firstServe = (a, b) => a.createdAt.localeCompare(b.createdAt); // unang order, unang atendido
+    let html = '';
+
+    if (groupBy === 'none') {
+      list.sort(firstServe);
+      html = list.map(o => this.adminOrderCard(o)).join('');
+    } else {
+      const keyOf = o => groupBy === 'createdAt' ? (o.createdAt || '').slice(0, 10) : (o.eventDate || 'TBD');
+      const groups = new Map();
+      for (const o of list) {
+        const k = keyOf(o);
+        if (!groups.has(k)) groups.set(k, []);
+        groups.get(k).push(o);
+      }
+      const keys = [...groups.keys()].sort((a, b) => a.localeCompare(b));
+      for (const k of keys) {
+        const items = groups.get(k).sort(firstServe);
+        const label = groupBy === 'createdAt' ? `Ordered: ${fmtDay(k)}` : `Event date: ${fmtDay(k)}`;
+        html += `
+          <div class="order-group">
+            <div class="order-group-head">📅 ${esc(label)} <span class="og-count">${items.length} order${items.length === 1 ? '' : 's'}</span></div>
+            ${items.map(o => this.adminOrderCard(o)).join('')}
+          </div>`;
+      }
+    }
+
+    wrap.innerHTML = html;
+
+    $$('select[data-status-for]', wrap).forEach(sel => sel.addEventListener('change', async () => {
+      try {
+        await this.api.patch(`/admin/orders/${sel.dataset.statusFor}/status`, { status: sel.value });
+        this.toast.show(`#${sel.dataset.statusFor} → ${statusLabel(sel.value)}`, 'success');
+        this.loadAdmin();
+      } catch (err) { this.toast.show(err.message, 'error'); this.loadAdmin(); }
+    }));
+  }
+
+    adminOrderCard(o) {
+    const ALL = ['pending', 'confirmed', 'preparing', 'ready', 'delivered', 'cannot_accommodate'];
+    const done = ['completed', 'cancelled', 'cannot_accommodate'].includes(o.status);
+    const opts = ALL.includes(o.status) ? ALL : [...ALL, o.status];
+    return `
+      <article class="order-card ${done ? 'done' : ''}">
         <header>
           <div>
             <span class="mono oid">#${esc(o.id)}</span>
@@ -647,20 +752,12 @@ class App {
         <footer>
           <span class="ototal mono">${money2(o.total)}</span>
           <label class="status-picker">Status
-            <select data-status-for="${esc(o.id)}">
-              ${ALL.map(st => `<option value="${st}" ${st === o.status ? 'selected' : ''}>${esc(statusLabel(st))}</option>`).join('')}
+            <select data-status-for="${esc(o.id)}" ${done ? 'disabled' : ''}>
+              ${opts.map(st => `<option value="${st}" ${st === o.status ? 'selected' : ''}>${esc(statusLabel(st))}</option>`).join('')}
             </select>
           </label>
         </footer>
-      </article>`).join('');
-
-    $$('select[data-status-for]', wrap).forEach(sel => sel.addEventListener('change', async () => {
-      try {
-        await this.api.patch(`/admin/orders/${sel.dataset.statusFor}/status`, { status: sel.value });
-        this.toast.show(`#${sel.dataset.statusFor} → ${statusLabel(sel.value)}`, 'success');
-        this.loadAdmin();
-      } catch (err) { this.toast.show(err.message, 'error'); this.loadAdmin(); }
-    }));
+      </article>`;
   }
 
   renderAdminUsers(users) {

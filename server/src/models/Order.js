@@ -1,21 +1,22 @@
 'use strict';
 
-/**
- * Order workflow:
- * pending -> confirmed -> preparing -> ready -> delivered
- *
- * "received by client" is intentionally separate from the delivery status.
- * The admin controls the order up to delivered; the client confirms receipt.
- */
+/** Order model + status pipeline. */
 class Order {
   static STATUSES = ['pending', 'confirmed', 'preparing', 'ready', 'delivered'];
+  static DONE = ['completed', 'cancelled', 'cannot_accommodate'];
 
   constructor(data) {
     Object.assign(this, data);
   }
 
+  /** Pwede lang mag-cancel habang pending o confirmed. */
   canCancel() {
-    return this.status === 'pending';
+    return this.status === 'pending' || this.status === 'confirmed';
+  }
+
+  /** Sarado na ang order — hindi na galawin. */
+  isDone() {
+    return Order.DONE.includes(this.status);
   }
 
   get itemCount() {

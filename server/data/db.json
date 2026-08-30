@@ -23,358 +23,39 @@
   ],
   "sessions": [
     {
-      "token": "25e39f89d0bad4b4188b2131d6fc63f4a7e202a3c4660cbb",
+      "token": "7197bcdc06967757dc77b5f4b3a2bde35e33f326ac8830df",
+      "userId": 2,
+      "expiresAt": 1788707414592
+    },
+    {
+      "token": "835d4e3283082d4e04d5f18302e91d88c58b2be11d5fac11",
+      "userId": 2,
+      "expiresAt": 1788709098004
+    },
+    {
+      "token": "ee9c2c3ba21013da4809fa5f09cee80b39587bbbab2b68d6",
       "userId": 1,
-      "expiresAt": 1787064818944
-    },
-    {
-      "token": "fc3f730d32de9e8a6d1c485032069237a185e81f3d2c952a",
-      "userId": 2,
-      "expiresAt": 1787329779396
+      "expiresAt": 1788710466831
     }
   ],
-  "orders": [
-    {
-      "id": "SS-1037",
-      "userId": "seed",
-      "items": [
-        {
-          "menuId": "m07",
-          "name": "Chicken Inasal",
-          "unit": "tray · 10 pcs",
-          "price": 980,
-          "qty": 2,
-          "lineTotal": 1960
-        },
-        {
-          "menuId": "m24",
-          "name": "Leche Flan",
-          "unit": "whole · 10 slices",
-          "price": 520,
-          "qty": 1,
-          "lineTotal": 520
-        },
-        {
-          "menuId": "m13",
-          "name": "Pancit Bihon Guisado",
-          "unit": "bilao · ~10 guests",
-          "price": 680,
-          "qty": 2,
-          "lineTotal": 1360
-        }
-      ],
-      "guests": 32,
-      "eventType": "Birthday",
-      "eventDate": "2026-08-13",
-      "eventTime": "17:00",
-      "notes": "",
-      "address": "Casa Real Events Pavilion, Silang, Cavite",
-      "location": null,
-      "subtotal": 3840,
-      "serviceFee": 460.8,
-      "deliveryFee": 250,
-      "total": 4550.8,
-      "status": "cannot_accommodate",
-      "createdAt": "2026-08-11T13:40:19.829Z"
-    },
-    {
-      "id": "SS-1038",
-      "userId": "seed",
-      "items": [
-        {
-          "menuId": "m03",
-          "name": "Lumpiang Shanghai",
-          "unit": "tray · 20 pcs",
-          "price": 280,
-          "qty": 5,
-          "lineTotal": 1400
-        },
-        {
-          "menuId": "m06",
-          "name": "Beef Kare-Kare",
-          "unit": "pan · ~10 guests",
-          "price": 1450,
-          "qty": 2,
-          "lineTotal": 2900
-        },
-        {
-          "menuId": "m16",
-          "name": "Chopsuey",
-          "unit": "bowl · ~10 guests",
-          "price": 420,
-          "qty": 4,
-          "lineTotal": 1680
-        }
-      ],
-      "guests": 60,
-      "eventType": "Corporate lunch",
-      "eventDate": "2026-08-15",
-      "eventTime": "17:00",
-      "notes": "",
-      "address": "Casa Real Events Pavilion, Silang, Cavite",
-      "location": null,
-      "subtotal": 5980,
-      "serviceFee": 717.6,
-      "deliveryFee": 0,
-      "total": 6697.6,
-      "status": "confirmed",
-      "createdAt": "2026-08-11T09:52:19.829Z"
-    },
-    {
-      "id": "SS-1039",
-      "userId": "seed",
-      "items": [
-        {
-          "menuId": "m02",
-          "name": "Filipino BBQ Skewers",
-          "unit": "tray · 10 sticks",
-          "price": 380,
-          "qty": 4,
-          "lineTotal": 1520
-        },
-        {
-          "menuId": "m18",
-          "name": "Lumpiang Sariwa",
-          "unit": "tray · 10 pcs",
-          "price": 350,
-          "qty": 3,
-          "lineTotal": 1050
-        },
-        {
-          "menuId": "m23",
-          "name": "Fruit Salad",
-          "unit": "bowl · ~10 guests",
-          "price": 480,
-          "qty": 2,
-          "lineTotal": 960
-        }
-      ],
-      "guests": 45,
-      "eventType": "Garden party",
-      "eventDate": "2026-08-17",
-      "eventTime": "17:00",
-      "notes": "",
-      "address": "Casa Real Events Pavilion, Silang, Cavite",
-      "location": null,
-      "subtotal": 3530,
-      "serviceFee": 423.6,
-      "deliveryFee": 250,
-      "total": 4203.6,
-      "status": "confirmed",
-      "createdAt": "2026-08-10T12:52:19.829Z"
-    },
-    {
-      "id": "SS-1040",
-      "userId": "seed",
-      "items": [
-        {
-          "menuId": "m05",
-          "name": "Ukoy na Hipon",
-          "unit": "tray · 12 pcs",
-          "price": 350,
-          "qty": 10,
-          "lineTotal": 3500
-        },
-        {
-          "menuId": "m08",
-          "name": "Crispy Pata",
-          "unit": "whole · ~8 guests",
-          "price": 1250,
-          "qty": 6,
-          "lineTotal": 7500
-        },
-        {
-          "menuId": "m25",
-          "name": "Mango Graham",
-          "unit": "whole · 10 slices",
-          "price": 550,
-          "qty": 4,
-          "lineTotal": 2200
-        }
-      ],
-      "guests": 120,
-      "eventType": "Wedding",
-      "eventDate": "2026-08-09",
-      "eventTime": "17:00",
-      "notes": "",
-      "address": "Casa Real Events Pavilion, Silang, Cavite",
-      "location": null,
-      "subtotal": 13200,
-      "serviceFee": 1584,
-      "deliveryFee": 0,
-      "total": 14784,
-      "status": "delivered",
-      "createdAt": "2026-08-09T13:52:19.829Z"
-    },
-    {
-      "id": "SS-1041",
-      "userId": "seed",
-      "items": [
-        {
-          "menuId": "m01",
-          "name": "Chicken Fillet",
-          "unit": "tray · 12 pcs",
-          "price": 320,
-          "qty": 7,
-          "lineTotal": 2240
-        },
-        {
-          "menuId": "m10",
-          "name": "Pork Sisig",
-          "unit": "sizzling plate · ~8",
-          "price": 750,
-          "qty": 4,
-          "lineTotal": 3000
-        },
-        {
-          "menuId": "m22",
-          "name": "Coffee Jelly",
-          "unit": "tray · 10 cups",
-          "price": 420,
-          "qty": 3,
-          "lineTotal": 1260
-        }
-      ],
-      "guests": 80,
-      "eventType": "Product launch",
-      "eventDate": "2026-08-07",
-      "eventTime": "17:00",
-      "notes": "",
-      "address": "Casa Real Events Pavilion, Silang, Cavite",
-      "location": null,
-      "subtotal": 6500,
-      "serviceFee": 780,
-      "deliveryFee": 0,
-      "total": 7280,
-      "status": "delivered",
-      "createdAt": "2026-08-08T11:52:19.829Z"
-    },
-    {
-      "id": "SS-1042",
-      "userId": "seed",
-      "items": [
-        {
-          "menuId": "m12",
-          "name": "Filipino Sweet Spaghetti",
-          "unit": "bilao · ~10 guests",
-          "price": 550,
-          "qty": 3,
-          "lineTotal": 1650
-        },
-        {
-          "menuId": "m14",
-          "name": "Pancit Canton",
-          "unit": "bilao · ~10 guests",
-          "price": 640,
-          "qty": 2,
-          "lineTotal": 1280
-        },
-        {
-          "menuId": "m21",
-          "name": "Buko Pandan",
-          "unit": "bowl · ~10 guests",
-          "price": 450,
-          "qty": 2,
-          "lineTotal": 900
-        }
-      ],
-      "guests": 28,
-      "eventType": "Family reunion",
-      "eventDate": "2026-08-05",
-      "eventTime": "17:00",
-      "notes": "",
-      "address": "Casa Real Events Pavilion, Silang, Cavite",
-      "location": null,
-      "subtotal": 3830,
-      "serviceFee": 459.6,
-      "deliveryFee": 250,
-      "total": 4539.6,
-      "status": "delivered",
-      "createdAt": "2026-08-06T14:52:19.829Z"
-    },
-    {
-      "id": "SS-1043",
-      "userId": 2,
-      "items": [
-        {
-          "menuId": "m12",
-          "name": "Filipino Sweet Spaghetti",
-          "unit": "bilao · ~10 guests",
-          "price": 550,
-          "qty": 1,
-          "lineTotal": 550
-        },
-        {
-          "menuId": "m13",
-          "name": "Pancit Bihon Guisado",
-          "unit": "bilao · ~10 guests",
-          "price": 680,
-          "qty": 1,
-          "lineTotal": 680
-        },
-        {
-          "menuId": "m02",
-          "name": "Filipino BBQ Skewers",
-          "unit": "tray · 10 sticks",
-          "price": 380,
-          "qty": 1,
-          "lineTotal": 380
-        }
-      ],
-      "guests": 25,
-      "address": "R. Papa Street, Barangay 462, Sampaloc, Fourth District, Manila, Capital District, Metro Manila, 1015, Philippines",
-      "location": {
-        "lat": 14.605512,
-        "lng": 120.986595
-      },
-      "eventType": "Garden party",
-      "eventDate": "2026-08-25",
-      "eventTime": "17:00",
-      "notes": "",
-      "subtotal": 1610,
-      "serviceFee": 193.2,
-      "deliveryFee": 250,
-      "total": 2053.2,
-      "status": "delivered",
-      "createdAt": "2026-08-11T15:33:36.847Z"
-    }
-  ],
+  "orders": [],
   "meta": {
     "counters": {
       "users": 2,
-      "orders": 7,
-      "messages": 3
+      "orders": 0,
+      "messages": 0
     },
     "seeded": true
   },
   "menuFlags": {
     "m24": true,
-    "m16": false
+    "m16": true,
+    "m01": true,
+    "m21": false
   },
-  "messages": [
-    {
-      "id": 1,
-      "clientId": 2,
-      "userId": 2,
-      "senderRole": "client",
-      "text": "hello",
-      "createdAt": "2026-08-14T16:28:56.134Z"
-    },
-    {
-      "id": 2,
-      "clientId": 2,
-      "userId": 1,
-      "senderRole": "admin",
-      "text": "hi",
-      "createdAt": "2026-08-14T16:29:25.559Z"
-    },
-    {
-      "id": 3,
-      "clientId": 2,
-      "userId": 1,
-      "senderRole": "admin",
-      "text": "what can i do for u?",
-      "createdAt": "2026-08-14T16:29:32.745Z"
-    }
-  ]
+  "messages": [],
+  "chatSeen": {
+    "1": "2026-08-30T16:20:29.538Z",
+    "2": "2026-08-30T16:21:41.352Z"
+  }
 }

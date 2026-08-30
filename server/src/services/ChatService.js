@@ -12,12 +12,27 @@ class ChatService {
     return this.db.findOne('users', u => u.id === id);
   }
 
-  /** One thread per client. */
-  getThread(clientId) {
-    return this.db
+  /** One thread per client. Marks undelivered messages as delivered for the viewer. */
+  getThread(clientId, viewer) {
+    const threadMsgs = this.db
       .find('messages', m => m.clientId === clientId)
-      .sort((a, b) => a.createdAt.localeCompare(b.createdAt))
-      .map(m => ({ ...m, senderName: (this.#user(m.userId) || {}).name || 'Unknown' }));
+      .sort((a, b) => a.createdAt.localeCompare(b.createdAt));
+
+    // Mark as "delivered" any message sent BY the other party that hasn't been marked yet
+    let changed = false;
+    const now = new Date().toISOString();
+    for (const m of threadMsgs) {
+      if (m.userId !== viewer.id && !m.deliveredAt) {
+        m.deliveredAt = now;
+        changed = true;
+      }
+    }
+    if (changed) this.db.save();
+
+    return threadMsgs.map(m => ({
+      ...m,
+      senderName: (this.#user(m.userId) || {}).name || 'Unknown'
+    }));
   }
 
   sendMessage(sender, clientId, text) {
@@ -33,7 +48,8 @@ class ChatService {
       userId: sender.id,
       senderRole: sender.role || 'client',
       text: body,
-      createdAt: new Date().toISOString()
+      createdAt: new Date().toISOString(),
+      deliveredAt: null
     };
     this.db.insert('messages', msg);
     return msg;
@@ -57,6 +73,23 @@ class ChatService {
         };
       })
       .sort((a, b) => (b.last ? b.last.at : '').localeCompare(a.last ? a.last.at : ''));
+  }
+
+  /* ---- unread / seen ---- */
+  markSeen(userId) {
+    if (!this.db.data.chatSeen) this.db.data.chatSeen = {};
+    this.db.data.chatSeen[userId] = new Date().toISOString();
+    this.db.save();
+  }
+
+  unreadCount(user) {
+    const seenAt = (this.db.data.chatSeen || {})[user.id] || '1970-01-01T00:00:00.000Z';
+    const isAdmin = (user.role || 'client') === 'admin';
+    return this.db.find('messages', m =>
+      m.userId !== user.id &&
+      m.createdAt > seenAt &&
+      (isAdmin || m.clientId === user.id)
+    ).length;
   }
 }
 

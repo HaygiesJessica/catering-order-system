@@ -579,3 +579,67 @@ h1, h2, h3, .display { font-family: 'Fraunces', serif; }
 .avail-thumb { width: 40px; height: 40px; border-radius: 8px; overflow: hidden; flex: none; background: var(--paper-2); }
 .avail-thumb img { width: 100%; height: 100%; object-fit: cover; }
 .avail-fallback { width: 100%; height: 100%; place-items: center; font-weight: 800; color: var(--forest); }
+
+/* ---- admin tabs & order filters ---- */
+.admin-tabs { display: flex; gap: 6px; margin: 18px 0 14px; flex-wrap: wrap; }
+.admin-tab {
+  border: 1.5px solid var(--line); background: var(--card); cursor: pointer;
+  border-radius: 999px; padding: 8px 16px; font: 800 .78rem 'Karla', sans-serif;
+  letter-spacing: .06em; text-transform: uppercase; color: var(--ink-soft); transition: all .18s;
+}
+.admin-tab:hover { border-color: var(--forest); color: var(--ink); }
+.admin-tab.active { background: var(--forest); border-color: var(--forest); color: var(--paper); }
+
+.admin-filterbar { display: flex; gap: 14px; flex-wrap: wrap; margin-bottom: 12px; }
+.admin-filterbar label {
+  display: flex; align-items: center; gap: 8px;
+  font-size: .68rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-soft);
+}
+.admin-filterbar select {
+  font: 700 .8rem 'Karla', sans-serif; border: 1.5px solid var(--line);
+  border-radius: 8px; padding: 7px 10px; background: #fff; cursor: pointer;
+}
+
+.order-group { margin-bottom: 22px; }
+.order-group-head {
+  display: flex; align-items: center; gap: 10px;
+  font: 800 .8rem 'Karla', sans-serif; letter-spacing: .06em; text-transform: uppercase;
+  color: var(--saffron-deep); margin-bottom: 10px;
+  border-bottom: 2px dashed var(--line); padding-bottom: 6px;
+}
+.og-count { background: var(--paper-2); border-radius: 999px; padding: 2px 10px; font-size: .68rem; color: var(--ink-soft); }
+/* ---- closed / done orders ---- */
+.order-card.done { opacity: .62; filter: grayscale(.7); }
+.order-card.done select { cursor: not-allowed; }
+.closed-note {
+  font-size: .7rem; font-weight: 800; letter-spacing: .08em;
+  text-transform: uppercase; color: var(--ink-soft);
+}
+.btn.ghost.ok { border-color: var(--ok); color: var(--ok); }
+.btn.ghost.ok:hover { background: var(--ok); color: #fff; }
+.timeline.completed .step.done { color: var(--ink-soft); }
+.pill.completed { background: #dfe5ee; color: #55617a; }
+/* ================= stable basket layout ================= */
+/* Fixed ang structure ng drawer — hindi natutulak pababa ang event form/totals */
+.drawer { display: flex; flex-direction: column; overflow-y: auto; }
+.drawer-head { flex: none; }
+.drawer-lines { flex: 0 1 auto; max-height: 42vh; min-height: 90px; overflow-y: auto; }
+.drawer-event, .drawer-foot { flex: none; }
+
+/* Fixed columns ang bawat cart line — hindi nagshi-shift ang space */
+.cart-line {
+  display: grid;
+  grid-template-columns: 56px 1fr 92px;
+  gap: 12px;
+  align-items: start;
+}
+.cart-thumb { position: relative; width: 56px; height: 56px; flex: none; border-radius: 10px; }
+.cart-thumb img,
+.cart-thumb .cart-fallback { position: absolute; inset: 0; width: 100%; height: 100%; }
+
+/* Fixed width ang kanang column (total + remove) */
+.cl-right { width: 92px; display: flex; flex-direction: column; align-items: flex-end; gap: 4px; }
+
+/* Tabular numbers — hindi nag-iiba ang lapad ng digits kapag nagbabago ang amount */
+.cl-total, .drawer-foot .row .mono { font-variant-numeric: tabular-nums; }
+.drawer-foot .row .mono { min-width: 76px; text-align: right; }

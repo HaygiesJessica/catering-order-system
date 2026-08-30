@@ -91,6 +91,10 @@ app.patch('/api/orders/:id/cancel', requireAuth, (req, res) => {
   res.json({ order: orderService.cancelOrder(req.user, req.params.id) });
 });
 
+app.patch('/api/orders/:id/complete', requireAuth, (req, res) => {
+  res.json({ order: orderService.completeOrder(req.user, req.params.id) });
+});
+
 /* ================= ADMIN ================= */
 app.get('/api/admin/stats', requireAuth, requireAdmin, (req, res) => {
   res.json({ stats: orderService.getStats() });

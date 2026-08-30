@@ -14,7 +14,7 @@ function timeAgo(iso) {
   return `${Math.floor(h / 24)}d ago`;
 }
 
-/** Menu, availability, orders, ticker, cancellation, admin tools. */
+/** Menu, availability, orders, ticker, cancellation, completion, admin tools. */
 class OrderService {
   constructor(db) {
     this.db = db;
@@ -76,10 +76,13 @@ class OrderService {
       throw new ApiError(400, 'Guest count must be between 10 and 2,000.');
     }
 
-    const eventDate = new Date(`${payload.eventDate}T00:00:00`);
-    const today = new Date(); today.setHours(0, 0, 0, 0);
-    if (Number.isNaN(eventDate.getTime())) throw new ApiError(400, 'Please pick a valid event date.');
-    if (eventDate < today) throw new ApiError(400, 'The event date cannot be in the past.');
+    const timeStr = String(payload.eventTime || '').trim();
+    if (!timeStr) throw new ApiError(400, 'Please set the event time.');
+    const eventWhen = new Date(`${payload.eventDate}T${timeStr}:00`);
+    if (Number.isNaN(eventWhen.getTime())) throw new ApiError(400, 'Please pick a valid event date and time.');
+    if (eventWhen <= new Date()) {
+      throw new ApiError(400, 'The event date and time cannot be in the past — same-day orders must be for a later time.');
+    }
 
     const address = String(payload.address || '').trim();
     if (address.length < 10) throw new ApiError(400, 'Please provide the complete delivery address.');
@@ -100,7 +103,7 @@ class OrderService {
       items, guests, address, location,
       eventType: EVENT_TYPES.includes(payload.eventType) ? payload.eventType : 'Private event',
       eventDate: payload.eventDate,
-      eventTime: String(payload.eventTime || ''),
+      eventTime: timeStr,
       notes: String(payload.notes || '').slice(0, 300),
       subtotal, serviceFee, deliveryFee,
       total: subtotal + serviceFee + deliveryFee,
@@ -120,20 +123,32 @@ class OrderService {
 
   getTicker(limit = 8) {
     return this.db
-      .find('orders', o => o.status !== 'cancelled' && o.status !== 'cannot_accommodate')
+      .find('orders', o => !['cancelled', 'cannot_accommodate', 'completed'].includes(o.status))
       .sort((a, b) => b.createdAt.localeCompare(a.createdAt))
       .slice(0, limit)
       .map(o => ({ id: o.id, eventType: o.eventType, guests: o.guests, status: o.status, ago: timeAgo(o.createdAt) }));
   }
 
+  /** Client cancels — allowed while pending or confirmed only. */
   cancelOrder(user, orderId) {
     const order = this.db.findOne('orders', o => o.id === orderId);
     if (!order || order.userId !== user.id) throw new ApiError(404, 'Order not found.');
     if (!new Order(order).canCancel()) {
-      throw new ApiError(409, 'This order is already being worked on — call the desk to change it.');
+      throw new ApiError(409, 'Orders can only be cancelled while pending or confirmed.');
     }
     this.db.update('orders', o => o.id === orderId, { status: 'cancelled' });
     return { ...order, status: 'cancelled' };
+  }
+
+  /** Client confirms pickup of a delivered order → completed (closed). */
+  completeOrder(user, orderId) {
+    const order = this.db.findOne('orders', o => o.id === orderId);
+    if (!order || order.userId !== user.id) throw new ApiError(404, 'Order not found.');
+    if (order.status !== 'delivered') {
+      throw new ApiError(409, 'You can confirm pickup once the order is delivered.');
+    }
+    this.db.update('orders', o => o.id === orderId, { status: 'completed' });
+    return { ...order, status: 'completed' };
   }
 
   /* ---------- admin ---------- */
@@ -147,10 +162,13 @@ class OrderService {
   }
 
   updateOrderStatus(orderId, status) {
-    const allowed = [...Order.STATUSES, 'cancelled', 'cannot_accommodate'];
+    const allowed = [...Order.STATUSES, 'cannot_accommodate'];
     if (!allowed.includes(status)) throw new ApiError(400, 'Unknown status.');
     const order = this.db.findOne('orders', o => o.id === orderId);
     if (!order) throw new ApiError(404, 'Order not found.');
+    if (new Order(order).isDone()) {
+      throw new ApiError(409, 'This order is already closed and can no longer be moved.');
+    }
     this.db.update('orders', o => o.id === orderId, { status });
     return { ...order, status };
   }
@@ -162,7 +180,7 @@ class OrderService {
       totalOrders: orders.length,
       pending: orders.filter(o => o.status === 'pending').length,
       upcoming: orders.filter(o => ['confirmed', 'preparing', 'ready'].includes(o.status)).length,
-      delivered: orders.filter(o => o.status === 'delivered').length,
+      delivered: orders.filter(o => o.status === 'delivered' || o.status === 'completed').length,
       revenue: live.reduce((sum, o) => sum + o.total, 0),
       guests: live.reduce((sum, o) => sum + o.guests, 0)
     };
