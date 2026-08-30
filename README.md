@@ -1,65 +1,58 @@
-# Saffron & Sage — Catering Order System
+# 🥘 Cai-nan Feast — Catering Order Desk
 
-A fullstack catering ordering app using a JSON database.
+> *Where Every Order Becomes a Feast.*
 
-## Roles
+A full-stack catering order system with a Filipino *handaan* heart — clients order feasts,
+the kitchen manages them, and both sides chat in real time.
+All data is preserved in a humble JSON pantry. **Zero SQL involved.** 🫙
 
-There are only **two roles**:
+Theme: 🇵 deep flag blue, sun gold, and flag red.
 
-### Admin
-The admin manages client orders from start to finish:
+---
 
-1. **Pending** — new client order
-2. **Confirmed** — admin accepts the order
-3. **Preparing** — kitchen is preparing it
-4. **Ready** — order is ready for delivery
-5. **Delivered** — admin confirms it has been delivered
-6. **Client received** — the client confirms receipt on their side
+## ✨ Features
 
-The admin can see all client orders and move each order one step at a time.  
-There is **no account/user list** in the admin dashboard.
+### 🛒 Client side
+- Register / sign in (scrypt-hashed passwords, token sessions)
+- Browse a Filipino menu by category, with dish photos (letter-tile fallback)
+- Basket with steppers, 12% service charge, delivery fee (FREE over ₱5,000)
+- **Map-pin delivery location** (Google tiles via Leaflet) with auto-filled address
+- Order timeline: `pending → confirmed → preparing → ready → delivered → completed`
+- **Cancel** while *pending* or *confirmed*
+- **Confirm pickup ✓** once delivered, to close the order
+- Notification sounds + chat alerts
 
-### Client
-The client can:
+### 🧑‍ Admin side
+- Order board with live stats (pending, in progress, delivered, revenue, guests fed)
+- Tabs: **Client orders / Menu availability / Accounts**
+- Orders **grouped by date** (event date or order date) — *first order, first serve*
+- Status filter
+- Move tickets down the line: `pending → confirmed → preparing → ready → delivered`
+- **Cannot accommodate** to close orders the kitchen can't take
+- Toggle any dish **Available / Not available** (reflects instantly on the client side)
+- Closed orders (*completed / cancelled / cannot accommodate*) are greyed out & locked
 
-- Browse the catering menu
-- Choose menu items and quantities
-- Enter event details
-- Place an order
-- Track their own order status
-- Cancel a pending order
-- Confirm the order after it is delivered
+### 💬 Chat & notifications
+- Client ↔ admin chat with date dividers, timestamps, and delivered ✓✓ ticks
+- Unread **red badge + buzz** on the 💬 button
+- Different sounds: chat blip · client status chime · admin new-order ding
 
-Clients cannot change order statuses and cannot access the admin order board.
+---
 
-## Run it
+## 🛠 Tech stack
+
+| Layer    | Tech |
+|----------|------|
+| Frontend | Vanilla HTML / CSS / JS (OOP classes), Leaflet |
+| Backend  | Node.js + Express (OOP services) |
+| Storage  | A single JSON file — `server/data/db.json` |
+
+---
+
+## 🚀 Getting started
+
+**Prerequisite:** Node.js 18+
 
 ```bash
 npm install
-npm start
-```
-
-Open: `http://localhost:3000`
-
-### Admin demo account
-
-- Email: `admin@saffronsage.test`
-- Password: `butter-thyme`
-
-New registrations are always **client** accounts.
-
-## Order API
-
-### Client
-- `GET /api/menu`
-- `GET /api/orders`
-- `POST /api/orders`
-- `PATCH /api/orders/:id/cancel`
-- `PATCH /api/orders/:id/confirm-received`
-
-### Admin
-- `GET /api/admin/stats`
-- `GET /api/admin/orders`
-- `PATCH /api/admin/orders/:id/status`
-
-All protected routes require the bearer token returned by login.
+npm run dev
