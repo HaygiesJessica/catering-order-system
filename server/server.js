@@ -151,7 +151,11 @@ app.use((err, req, res, next) => {
   });
 });
 
-app.listen(PORT, () => {
-  console.log(`🥘  Saffron & Sage order desk running → http://localhost:${PORT}`);
-  console.log('    Storage: server/data/db.json (a humble JSON pantry — no SQL involved).');
-});
+if (require.main === module) {
+  app.listen(PORT, () => {
+    console.log(`🥘  Cai-nan Feast → http://localhost:${PORT}`);
+    console.log('    Storage: server/data/db.json (a humble JSON pantry — no SQL involved).');
+  });
+}
+
+module.exports = app;

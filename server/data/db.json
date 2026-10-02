@@ -23,19 +23,9 @@
   ],
   "sessions": [
     {
-      "token": "7197bcdc06967757dc77b5f4b3a2bde35e33f326ac8830df",
+      "token": "52156e0f27711d3c259a898a2363c1d890cf305601c0ef93",
       "userId": 2,
-      "expiresAt": 1788707414592
-    },
-    {
-      "token": "835d4e3283082d4e04d5f18302e91d88c58b2be11d5fac11",
-      "userId": 2,
-      "expiresAt": 1788709098004
-    },
-    {
-      "token": "ee9c2c3ba21013da4809fa5f09cee80b39587bbbab2b68d6",
-      "userId": 1,
-      "expiresAt": 1788710466831
+      "expiresAt": 1791515199461
     }
   ],
   "orders": [],
