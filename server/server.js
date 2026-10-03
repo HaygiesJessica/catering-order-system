@@ -50,11 +50,6 @@ function requireAdmin(req, res, next) {
 }
 
 /* ================= AUTH ================= */
-app.post('/api/auth/register', (req, res) => {
-  const { user, token } = authService.register(req.body || {});
-  res.status(201).json({ user, token });
-});
-
 app.post('/api/auth/login', (req, res) => {
   const { user, token } = authService.login(req.body || {});
   res.json({ user, token });
@@ -154,7 +149,7 @@ app.use((err, req, res, next) => {
 if (require.main === module) {
   app.listen(PORT, () => {
     console.log(`🥘  Cai-nan Feast → http://localhost:${PORT}`);
-    console.log('    Storage: server/data/db.json (a humble JSON pantry — no SQL involved).');
+    console.log('    Storage: server/data/db.json');
   });
 }
 

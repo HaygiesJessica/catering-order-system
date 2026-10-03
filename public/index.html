@@ -69,12 +69,6 @@
     <div class="auth-card" id="authCard">
       <p class="eyebrow">Order desk</p>
 
-      <div class="tabs" data-active="login">
-        <button class="tab" type="button" data-tab="login">Sign in</button>
-        <button class="tab" type="button" data-tab="register">Create account</button>
-        <span class="tab-ind"></span>
-      </div>
-
       <!-- LOGIN -->
       <form id="loginForm" class="authform" novalidate>
         <div class="field">
@@ -91,39 +85,10 @@
           <span class="btn-label">Sign in</span><span class="spinner"></span>
         </button>
         <p class="hint">
-          Demo client · <code>chef@saffronsage.test</code> / <code>butter-thyme</code><br>
-          Admin · <code>admin@saffronsage.test</code> / <code>admin1234</code>
+          Demo client · <code>user@cainanfeast.ph</code> / <code>user1234</code><br>
+          Admin · <code>admin@cainanfeast.ph</code> / <code>admin1234</code>
         </p>
       </form>
-
-      <!-- REGISTER -->
-      <form id="registerForm" class="authform" novalidate hidden>
-        <div class="field">
-          <input type="text" id="registerName" placeholder=" " autocomplete="name">
-          <label for="registerName">Full name</label>
-        </div>
-        <div class="field">
-          <input type="email" id="registerEmail" placeholder=" " autocomplete="email">
-          <label for="registerEmail">Email address</label>
-        </div>
-        <div class="field pw">
-          <input type="password" id="registerPassword" placeholder=" " autocomplete="new-password">
-          <label for="registerPassword">Password</label>
-          <button type="button" class="pw-toggle" data-target="registerPassword">Show</button>
-        </div>
-        <div class="strength" id="strengthBar"><i></i><i></i><i></i><i></i><span id="strengthLabel"></span></div>
-        <div class="field pw">
-          <input type="password" id="registerConfirm" placeholder=" " autocomplete="new-password">
-          <label for="registerConfirm">Confirm password</label>
-        </div>
-        <p class="form-msg" id="registerMsg" hidden></p>
-        <button class="btn btn-primary btn-block" id="registerBtn" type="submit">
-          <span class="btn-label">Create my account</span><span class="spinner"></span>
-        </button>
-        <p class="hint">By creating an account you agree to eat extremely well.</p>
-      </form>
-
-      <p class="no-sql">🫙 Preserved in a JSON pantry — zero SQL involved.</p>
     </div>
   </main>
 </div>

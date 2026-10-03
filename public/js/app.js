@@ -216,18 +216,12 @@ class App {
   
   /* ---------- AUTH ---------- */
   bindTabs() {
-    $$('.tab').forEach(tab => tab.addEventListener('click', () => {
-      $('.tabs').dataset.active = tab.dataset.tab;
-      $('#loginForm').hidden = tab.dataset.tab !== 'login';
-      $('#registerForm').hidden = tab.dataset.tab !== 'register';
-    }));
     $$('.pw-toggle').forEach(btn => btn.addEventListener('click', () => {
       const input = $('#' + btn.dataset.target);
       const show = input.type === 'password';
       input.type = show ? 'text' : 'password';
       btn.textContent = show ? 'Hide' : 'Show';
     }));
-    $('#registerPassword').addEventListener('input', e => this.paintStrength(e.target.value));
   }
 
   paintStrength(pw) {
@@ -260,30 +254,6 @@ class App {
         showMsg('login', err.message);
         this.shakeCard();
       } finally { setLoading($('#loginBtn'), false); }
-    });
-
-    $('#registerForm').addEventListener('submit', async e => {
-      e.preventDefault();
-      hideMsg('register');
-      const name = $('#registerName').value.trim();
-      const email = $('#registerEmail').value.trim();
-      const password = $('#registerPassword').value;
-      const confirm = $('#registerConfirm').value;
-      if (name.length < 2) return showMsg('register', 'Please tell us your name.');
-      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return showMsg('register', "That email address doesn't look right.");
-      if (password.length < 8) return showMsg('register', 'Password must be at least 8 characters.');
-      if (password !== confirm) return showMsg('register', "Passwords don't match.");
-      setLoading($('#registerBtn'), true);
-      try {
-        const { user, token } = await this.api.post('/auth/register', { name, email, password });
-        this.api.setToken(token);
-        e.target.reset();
-        this.paintStrength('');
-        await this.enterApp(user);
-      } catch (err) {
-        showMsg('register', err.message);
-        this.shakeCard();
-      } finally { setLoading($('#registerBtn'), false); }
     });
   }
 

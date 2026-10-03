@@ -71,7 +71,8 @@ class ChatService {
           count: msgs.length,
           last: last ? { text: last.text, at: last.createdAt, fromAdmin: last.senderRole === 'admin' } : null
         };
-      })
+            })
+      .filter(t => t.count > 0)
       .sort((a, b) => (b.last ? b.last.at : '').localeCompare(a.last ? a.last.at : ''));
   }
 

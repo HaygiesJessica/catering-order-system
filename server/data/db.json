@@ -1,56 +1,253 @@
 {
   "users": [
     {
-      "id": 1,
+      "id": 5,
       "name": "Head Chef",
-      "email": "admin@saffronsage.test",
+      "email": "admin@cainanfeast.ph",
       "phone": "",
-      "passwordHash": "ae4a95bfe044e487f5bc92b10c921430a18cf57324409258a762fa8245d141455cf03bd3cb3766eef09c56eaf874b32ab50c29483bc0ff38f68b4fe868d1cc11",
-      "salt": "78cf3f261d3f898f6105725ef17b965f",
+      "passwordHash": "90f4214dd5af67f54262f897debe98c459bdad80369df515985f468e11241fe57ddcb9397c1b0a5314ea6b421f4b6c33be0dff980e0d3717d3cb1e4203fd3453",
+      "salt": "4d0ed500bb4470ca6a98cb8e14385345",
       "role": "admin",
-      "createdAt": "2026-08-11T14:52:19.784Z"
+      "createdAt": "2026-10-03T14:56:14.586Z"
     },
     {
-      "id": 2,
-      "name": "Demo Chef",
-      "email": "chef@saffronsage.test",
+      "id": 7,
+      "name": "User",
+      "email": "user@cainanfeast.ph",
       "phone": "",
-      "passwordHash": "cb8d012e82714c624c3ea7568e6a41ccbb4d24f0daa68bc44f29d235e4c571aa44484115c2b42518d1aee58f5729f60817b08fcc6a6c240b7beed6d6c81c24f4",
-      "salt": "a643ce500b4b48ae53ad4eedd0455d99",
+      "passwordHash": "d1045d1b7f10c683c6fd516c935bee15d74e4f4292032f9e42dc4ff6ea3b305f33f9cb18ec498b87e48b6895f7613639ec960527ad02ae1abc64b912fcc4956c",
+      "salt": "688c27c8668eb0aa00cd5e400792a5cb",
       "role": "client",
-      "createdAt": "2026-08-11T14:52:19.827Z"
+      "createdAt": "2026-10-03T14:59:12.790Z"
     }
   ],
   "sessions": [
     {
-      "token": "52156e0f27711d3c259a898a2363c1d890cf305601c0ef93",
-      "userId": 2,
-      "expiresAt": 1791515199461
-    },
-    {
-      "token": "402386bd2ee9a964a62b306803bc7cb091562a4ac3d96ec0",
-      "userId": 2,
-      "expiresAt": 1791515709899
+      "token": "e6ecb6329add3e238781b2759fdfb7bd99fd6ca0b515accd",
+      "userId": 7,
+      "expiresAt": 1791645198523
     }
   ],
-  "orders": [],
+  "orders": [
+    {
+      "id": "SS-1037",
+      "userId": 7,
+      "items": [
+        {
+          "menuId": "m02",
+          "name": "Filipino BBQ Skewers",
+          "unit": "tray · 10 sticks",
+          "price": 380,
+          "qty": 1,
+          "lineTotal": 380
+        },
+        {
+          "menuId": "m03",
+          "name": "Lumpiang Shanghai",
+          "unit": "tray · 20 pcs",
+          "price": 280,
+          "qty": 1,
+          "lineTotal": 280
+        }
+      ],
+      "guests": 10,
+      "address": "Manuel L. Quezon University, F. R. Hidalgo Street, Barangay 383, Barangay 391, Quiapo, Third District, Manila, Capital District, Metro Manila, 1001, Philippines",
+      "location": {
+        "lat": 14.599709,
+        "lng": 120.986012
+      },
+      "eventType": "Birthday",
+      "eventDate": "2026-10-29",
+      "eventTime": "17:00",
+      "notes": "None",
+      "subtotal": 660,
+      "serviceFee": 79.2,
+      "deliveryFee": 250,
+      "total": 989.2,
+      "status": "cannot_accommodate",
+      "createdAt": "2026-10-03T15:07:53.636Z"
+    },
+    {
+      "id": "SS-1038",
+      "userId": 7,
+      "items": [
+        {
+          "menuId": "m02",
+          "name": "Filipino BBQ Skewers",
+          "unit": "tray · 10 sticks",
+          "price": 380,
+          "qty": 1,
+          "lineTotal": 380
+        },
+        {
+          "menuId": "m03",
+          "name": "Lumpiang Shanghai",
+          "unit": "tray · 20 pcs",
+          "price": 280,
+          "qty": 1,
+          "lineTotal": 280
+        },
+        {
+          "menuId": "m04",
+          "name": "Tokwa't Baboy",
+          "unit": "bowl · ~10 guests",
+          "price": 260,
+          "qty": 1,
+          "lineTotal": 260
+        },
+        {
+          "menuId": "m05",
+          "name": "Ukoy na Hipon",
+          "unit": "tray · 12 pcs",
+          "price": 350,
+          "qty": 1,
+          "lineTotal": 350
+        },
+        {
+          "menuId": "m06",
+          "name": "Beef Kare-Kare",
+          "unit": "pan · ~10 guests",
+          "price": 1450,
+          "qty": 1,
+          "lineTotal": 1450
+        },
+        {
+          "menuId": "m07",
+          "name": "Chicken Inasal",
+          "unit": "tray · 10 pcs",
+          "price": 980,
+          "qty": 1,
+          "lineTotal": 980
+        },
+        {
+          "menuId": "m08",
+          "name": "Crispy Pata",
+          "unit": "whole · ~8 guests",
+          "price": 1250,
+          "qty": 1,
+          "lineTotal": 1250
+        },
+        {
+          "menuId": "m09",
+          "name": "Pork Bistek Tagalog",
+          "unit": "pan · ~10 guests",
+          "price": 890,
+          "qty": 1,
+          "lineTotal": 890
+        },
+        {
+          "menuId": "m10",
+          "name": "Pork Sisig",
+          "unit": "sizzling plate · ~8",
+          "price": 750,
+          "qty": 1,
+          "lineTotal": 750
+        },
+        {
+          "menuId": "m11",
+          "name": "Filipino Carbonara",
+          "unit": "bilao · ~10 guests",
+          "price": 620,
+          "qty": 1,
+          "lineTotal": 620
+        },
+        {
+          "menuId": "m12",
+          "name": "Filipino Sweet Spaghetti",
+          "unit": "bilao · ~10 guests",
+          "price": 550,
+          "qty": 1,
+          "lineTotal": 550
+        },
+        {
+          "menuId": "m14",
+          "name": "Pancit Canton",
+          "unit": "bilao · ~10 guests",
+          "price": 640,
+          "qty": 1,
+          "lineTotal": 640
+        },
+        {
+          "menuId": "m18",
+          "name": "Lumpiang Sariwa",
+          "unit": "tray · 10 pcs",
+          "price": 350,
+          "qty": 1,
+          "lineTotal": 350
+        },
+        {
+          "menuId": "m20",
+          "name": "Sipo Egg",
+          "unit": "bowl · ~10 guests",
+          "price": 410,
+          "qty": 1,
+          "lineTotal": 410
+        },
+        {
+          "menuId": "m19",
+          "name": "Pinakbet",
+          "unit": "bowl · ~10 guests",
+          "price": 390,
+          "qty": 1,
+          "lineTotal": 390
+        }
+      ],
+      "guests": 25,
+      "address": "Patubig Road, Centro, Balucuc, Apalit, Pampanga, Central Luzon, 2016, Philippines",
+      "location": {
+        "lat": 14.96336,
+        "lng": 120.846119
+      },
+      "eventType": "Wedding",
+      "eventDate": "2026-10-19",
+      "eventTime": "13:00",
+      "notes": "",
+      "subtotal": 9550,
+      "serviceFee": 1146,
+      "deliveryFee": 0,
+      "total": 10696,
+      "status": "completed",
+      "createdAt": "2026-10-03T15:09:21.275Z"
+    }
+  ],
   "meta": {
     "counters": {
-      "users": 2,
-      "orders": 0,
-      "messages": 0
+      "users": 14,
+      "orders": 2,
+      "messages": 2
     },
     "seeded": true
   },
   "menuFlags": {
     "m24": true,
     "m16": true,
-    "m01": true,
+    "m01": false,
     "m21": false
   },
-  "messages": [],
+  "messages": [
+    {
+      "id": 1,
+      "clientId": 7,
+      "userId": 7,
+      "senderRole": "client",
+      "text": "hi",
+      "createdAt": "2026-10-03T15:05:26.945Z",
+      "deliveredAt": "2026-10-03T15:05:33.201Z"
+    },
+    {
+      "id": 2,
+      "clientId": 7,
+      "userId": 5,
+      "senderRole": "admin",
+      "text": "yes?",
+      "createdAt": "2026-10-03T15:11:54.696Z",
+      "deliveredAt": "2026-10-03T15:11:57.485Z"
+    }
+  ],
   "chatSeen": {
     "1": "2026-08-30T16:20:29.538Z",
-    "2": "2026-08-30T16:21:41.352Z"
+    "2": "2026-08-30T16:21:41.352Z",
+    "5": "2026-10-03T15:24:48.642Z",
+    "7": "2026-10-03T15:11:57.496Z"
   }
 }

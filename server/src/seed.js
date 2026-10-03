@@ -5,23 +5,23 @@ const { MENU, FEES } = require('./seed-data');
 const { hashPassword } = require('./passwords');
 
 function seedAdmin(db) {
-  if (db.findOne('users', u => u.email === 'admin@saffronsage.test')) return;
+  if (db.findOne('users', u => u.email === 'admin@cainanfeast.ph')) return;
   const salt = crypto.randomBytes(16).toString('hex');
   db.insert('users', {
-    id: db.nextId('users'), name: 'Head Chef', email: 'admin@saffronsage.test', phone: '',
+    id: db.nextId('users'), name: 'Head Chef', email: 'admin@cainanfeast.ph', phone: '',
     passwordHash: hashPassword('admin1234', salt), salt, role: 'admin', createdAt: new Date().toISOString()
   });
-  console.log('[db] Admin ready → admin@saffronsage.test / admin1234');
+  console.log('[db] Admin ready → admin@cainanfeast.ph / admin1234');
 }
 
 function seedDemoClient(db) {
-  if (db.findOne('users', u => u.email === 'chef@saffronsage.test')) return;
+  if (db.findOne('users', u => u.email === 'user@cainanfeast.ph')) return;
   const salt = crypto.randomBytes(16).toString('hex');
   db.insert('users', {
-    id: db.nextId('users'), name: 'Demo Chef', email: 'chef@saffronsage.test', phone: '',
-    passwordHash: hashPassword('butter-thyme', salt), salt, role: 'client', createdAt: new Date().toISOString()
+    id: db.nextId('users'), name: 'User', email: 'user@cainanfeast.ph', phone: '',
+    passwordHash: hashPassword('user1234', salt), salt, role: 'client', createdAt: new Date().toISOString()
   });
-  console.log('[db] Demo client ready → chef@saffronsage.test / butter-thyme');
+  console.log('[db] Demo client ready → user@cainanfeast.ph / user1234');
 }
 
 function seedDatabase(db) {
