@@ -8,9 +8,9 @@ A full-stack catering order system with a Filipino *handaan* heart — clients o
 
 ---
 
-## ✨ Features
+##Features
 
-### 🛒 Client side
+###Client side
 - Sign in (scrypt-hashed passwords, token sessions)
 - Browse a Filipino menu by category, with dish photos (letter-tile fallback)
 - Basket with steppers, 12% service charge, delivery fee (FREE over ₱5,000)
@@ -20,7 +20,7 @@ A full-stack catering order system with a Filipino *handaan* heart — clients o
 - **Confirm pickup ✓** once delivered, to close the order
 - Notification sounds + chat alerts
 
-### 🧑‍🍳 Admin side
+###Admin side
 - Order board with live stats (pending, in progress, delivered, revenue, guests fed)
 - Tabs: **Client orders / Menu availability / Accounts**
 - Orders **grouped by date** (event date or order date) — *first order, first serve*
@@ -30,7 +30,7 @@ A full-stack catering order system with a Filipino *handaan* heart — clients o
 - Toggle any dish **Available / Not available** (reflects instantly on the client side)
 - Closed orders (*completed / cancelled / cannot accommodate*) are greyed out & locked
 
-### 💬 Chat & notifications
+### Chat & notifications
 - Client ↔ admin chat with date dividers, timestamps, and delivered ✓✓ ticks
 - Unread **red badge + buzz** on the 💬 button
 - Different sounds: chat blip · client status chime · admin new-order ding
@@ -39,7 +39,7 @@ Clients cannot change order statuses and cannot access the admin order board.
 
 ---
 
-## 📋 Order lifecycle
+##Order lifecycle
 
 1. **Pending** — new client order
 2. **Confirmed** — admin accepts the order
@@ -52,7 +52,7 @@ The admin can move each order one step at a time.
 
 ---
 
-## 🛠 Tech stack
+##Tech stack
 
 | Layer    | Tech |
 |----------|------|
@@ -62,7 +62,7 @@ The admin can move each order one step at a time.
 
 ---
 
-## 🚀 Getting started
+##Getting started
 
 **Prerequisite:** Node.js 18+
 
