@@ -2,13 +2,11 @@
 
 > *Where Every Order Becomes a Feast.*
 
-A full-stack catering order system with a Filipino *handaan* heart — clients order feasts, the kitchen manages them, and both sides chat in real time. All data is stored in a simple JSON file. **Zero SQL involved.**
-
-**Theme:** deep flag blue, sun gold, and flag red.
+A full-stack catering order system with a Filipino *handaan* heart — clients order feasts, the kitchen manages them, and both sides chat in real time. All data is stored in a simple JSON file. 
 
 ---
 
-**Features**
+## **Features**
 
 **Client side**
 
@@ -42,7 +40,7 @@ Clients cannot change order statuses and cannot access the admin order board.
 
 ---
 
-**Order lifecycle**
+## **Order lifecycle**
 
 1. **Pending** — new client order
 2. **Confirmed** — admin accepts the order
@@ -55,7 +53,7 @@ The admin can move each order one step at a time.
 
 ---
 
-**Tech Stack**
+## **Tech Stack**
 
 | **Layer** | **Tech**                                       |
 | --------- | ---------------------------------------------- |
@@ -65,7 +63,7 @@ The admin can move each order one step at a time.
 
 ---
 
-**Getting started**
+## **Getting started**
 
 **Prerequisite:** Node.js 18+
 
